@@ -1,5 +1,10 @@
 import styled from "styled-components";
-import { Title, ColorTitle, Text } from "../components/UIKit.styled";
+import {
+  Title,
+  ColorTitle,
+  Text,
+  TextButton,
+} from "../components/UIKit.styled";
 import store, { Category } from "../Store";
 import uuid from "react-uuid";
 import { observer } from "mobx-react-lite";
@@ -15,6 +20,11 @@ const ShoppingList = observer(() => {
   return (
     <ShoppingListContainer>
       <Title>Shopping List</Title>
+      <div style={{ marginLeft: "auto" }}>
+        <TextButton onClick={() => store.clearShoppingList()}>
+          Clear all
+        </TextButton>
+      </div>
       {Object.values(Category).map((category) => (
         <div key={uuid()}>
           <ColorTitle>{category}</ColorTitle>
@@ -39,9 +49,10 @@ const ShoppingList = observer(() => {
                       />
                     ) : (
                       <RadioButtonUncheckedIcon
-                        onClick={() =>
-                          store.setBoughtInCheckList(list.id, true)
-                        }
+                        onClick={() => {
+                          store.setBoughtInCheckList(list.id, true);
+                          store.setLastBought(list.id, new Date());
+                        }}
                       />
                     )}
                     <Text>{list.description}</Text>

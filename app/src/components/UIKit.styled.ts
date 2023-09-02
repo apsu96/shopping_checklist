@@ -44,6 +44,15 @@ export const SmallButton = styled(Button)<{ variant?: string }>`
     variant === "opacity" ? "0.5" : "1"};
 `;
 
+export const TextButton = styled(Button)`
+  padding: 0;
+  background-color: transparent;
+  color: #a60202;
+  &:hover {
+    color: black;
+  }
+`;
+
 export const IconButton = styled(SmallButton)`
   padding: 0;
   background-color: transparent;

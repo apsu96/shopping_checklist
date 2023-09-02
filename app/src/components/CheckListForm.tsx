@@ -31,6 +31,7 @@ const CheckListForm = () => {
       category,
       needToBuy: false,
       boughtInChecklist: false,
+      lastBought: null,
     });
     clearForm();
   }

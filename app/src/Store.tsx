@@ -19,6 +19,7 @@ export interface ShoppingItem {
   category: Category;
   needToBuy: boolean;
   boughtInChecklist: boolean;
+  lastBought: Date | null;
 }
 
 class Store {
@@ -41,9 +42,25 @@ class Store {
     this.updateLocalStorage();
   }
 
+  clearShoppingList() {
+    this.checkList = this.checkList.map((list) => ({
+      ...list,
+      needToBuy: false,
+      boughtInChecklist: false,
+    }));
+    this.updateLocalStorage();
+  }
+
   setBoughtInCheckList(id: string, option: boolean) {
     this.checkList = this.checkList.map((list) =>
       list.id === id ? { ...list, boughtInChecklist: option } : list
+    );
+    this.updateLocalStorage();
+  }
+
+  setLastBought(id: string, date: Date) {
+    this.checkList = this.checkList.map((list) =>
+      list.id === id ? { ...list, lastBought: date } : list
     );
     this.updateLocalStorage();
   }

@@ -30,6 +30,7 @@ const CheckListForm = () => {
       period,
       category,
       needToBuy: false,
+      boughtInChecklist: false,
     });
     clearForm();
   }

@@ -18,6 +18,7 @@ export interface ShoppingItem {
   period: Period;
   category: Category;
   needToBuy: boolean;
+  boughtInChecklist: boolean;
 }
 
 class Store {
@@ -36,6 +37,13 @@ class Store {
   setNeedToBuy(id: string, option: boolean) {
     this.checkList = this.checkList.map((list) =>
       list.id === id ? { ...list, needToBuy: option } : list
+    );
+    this.updateLocalStorage();
+  }
+
+  setBoughtInCheckList(id: string, option: boolean) {
+    this.checkList = this.checkList.map((list) =>
+      list.id === id ? { ...list, boughtInChecklist: option } : list
     );
     this.updateLocalStorage();
   }

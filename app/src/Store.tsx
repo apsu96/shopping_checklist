@@ -33,6 +33,18 @@ class Store {
     this.updateLocalStorage();
   }
 
+  setNeedToBuy(id: string, option: boolean) {
+    this.checkList = this.checkList.map((list) =>
+      list.id === id ? { ...list, needToBuy: option } : list
+    );
+    this.updateLocalStorage();
+  }
+
+  deleteItem(id: string) {
+    this.checkList = this.checkList.filter((list) => list.id !== id);
+    this.updateLocalStorage();
+  }
+
   updateLocalStorage() {
     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(this.checkList));
   }

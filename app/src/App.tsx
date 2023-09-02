@@ -5,7 +5,6 @@ import Checklist from "./pages/Checklist";
 import ShoppingList from "./pages/ShoppingList";
 
 const AppContainer = styled.div`
-  background: #f9f9f9;
   min-height: 100vh;
   max-width: 1440px;
   width: 100%;

@@ -1,68 +1,43 @@
-import styled from "styled-components";
 import {
   Title,
   ColorTitle,
-  Text,
   TextButton,
+  HelpText,
 } from "../components/UIKit.styled";
 import store, { Category } from "../Store";
 import uuid from "react-uuid";
 import { observer } from "mobx-react-lite";
-import RadioButtonUncheckedIcon from "@mui/icons-material/RadioButtonUnchecked";
-import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 
-export const ShoppingListContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
+import { ButtonContainer, ShoppingListContainer } from "./ShoppingList.styled";
+import ShoppingListItem from "../components/ShoppingListItem";
 
 const ShoppingList = observer(() => {
+  const sortedData = {
+    [Category.grocery]: store.checkList.filter(
+      (list) => list.category === Category.grocery && list.needToBuy
+    ),
+    [Category.household]: store.checkList.filter(
+      (list) => list.category === Category.household && list.needToBuy
+    ),
+  };
   return (
     <ShoppingListContainer>
       <Title>Shopping List</Title>
-      <div style={{ marginLeft: "auto" }}>
+      <ButtonContainer>
         <TextButton onClick={() => store.clearShoppingList()}>
           Clear all
         </TextButton>
-      </div>
-      {Object.values(Category).map((category) => (
+      </ButtonContainer>
+      {Object.entries(sortedData).map(([key, value]) => (
         <div key={uuid()}>
-          <ColorTitle>{category}</ColorTitle>
-          {store.checkList.map((list) => {
-            if (list.needToBuy) {
-              if (list.category === category) {
-                return (
-                  <div
-                    key={uuid()}
-                    style={{
-                      width: "32px",
-                      display: "flex",
-                      gap: "15px",
-                      alignItems: "center",
-                    }}
-                  >
-                    {list.boughtInChecklist ? (
-                      <CheckCircleIcon
-                        onClick={() =>
-                          store.setBoughtInCheckList(list.id, false)
-                        }
-                      />
-                    ) : (
-                      <RadioButtonUncheckedIcon
-                        onClick={() => {
-                          store.setBoughtInCheckList(list.id, true);
-                          store.setLastBought(list.id, new Date());
-                        }}
-                      />
-                    )}
-                    <Text>{list.description}</Text>
-                  </div>
-                );
-              } else {
-                return null;
-              }
-            } else return null;
-          })}
+          <ColorTitle>{key}</ColorTitle>
+          {value.length === 0 ? (
+            <HelpText>No Items</HelpText>
+          ) : (
+            value.map((item) => {
+              return <ShoppingListItem key={uuid()} item={item} />;
+            })
+          )}
         </div>
       ))}
     </ShoppingListContainer>

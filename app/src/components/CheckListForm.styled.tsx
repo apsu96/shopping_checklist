@@ -57,7 +57,13 @@ export const Button = styled.button`
   color: white;
   font-size: 16px;
   font-weight: 500;
+  cursor: pointer;
   &:active {
     transform: translateY(1px);
+  }
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
   }
 `;

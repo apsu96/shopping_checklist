@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Title, ColorTitle } from "./UIKit.styled";
+import { Title, ColorTitle, TextLink } from "./UIKit.styled";
 import store, { Category } from "../Store";
 import uuid from "react-uuid";
 import { observer } from "mobx-react-lite";
@@ -22,15 +22,16 @@ const ItemsList = observer(() => {
     <ItemsListContainer>
       <Title>
         Review the shopping items checklist and indicate the products you need
-        to purchase.
+        to purchase. See{" "}
+        <TextLink to={"/shoppingList"}>your shopping list</TextLink>.
       </Title>
       <ItemsCategoryContainer>
         {Object.values(Category).map((val) => (
           <div key={uuid()}>
             <ColorTitle>{val}</ColorTitle>
-            {store.checkList.map((item) => {
+            {store.checkList.map((item, index) => {
               if (item.category === val) {
-                return <ItemLine key={uuid()} item={item} />;
+                return <ItemLine key={uuid()} item={item} index={index} />;
               } else {
                 return null;
               }

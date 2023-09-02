@@ -35,6 +35,11 @@ class Store {
     this.updateLocalStorage();
   }
 
+  setDescription(index: number, newValue: string) {
+    this.checkList[index].description = newValue;
+    this.updateLocalStorage();
+  }
+
   setNeedToBuy(id: string, option: boolean) {
     this.checkList = this.checkList.map((list) =>
       list.id === id ? { ...list, needToBuy: option } : list

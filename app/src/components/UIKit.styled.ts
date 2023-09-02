@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { styled } from "styled-components";
 
 export const Title = styled.p`
@@ -60,4 +61,19 @@ export const IconButton = styled(SmallButton)`
   &:hover {
     color: #a60202;
   }
+`;
+
+export const CustomInput = styled.input`
+  background-color: transparent;
+  outline: none;
+  border: none;
+  font-family: "Open Sans", sans-serif;
+  text-transform: uppercase;
+  text-overflow: ellipsis;
+  width: 50%;
+`;
+
+export const TextLink = styled(Link)`
+  text-decoration: none;
+  color: #a60202;
 `;

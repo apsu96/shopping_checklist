@@ -57,4 +57,7 @@ export const IconButton = styled(SmallButton)`
   padding: 0;
   background-color: transparent;
   color: black;
+  &:hover {
+    color: #a60202;
+  }
 `;

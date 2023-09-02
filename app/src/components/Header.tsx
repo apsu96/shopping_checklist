@@ -1,9 +1,7 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { styled } from "styled-components";
 import { HeaderContainer, LinkButton } from "./Header.styled";
-
-const Text = styled.p``;
+import { Text } from "./UIKit.styled";
 
 const Header = () => {
   const [currentPage, setCurrentPage] = useState({

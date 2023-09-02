@@ -4,6 +4,9 @@ export const CheckListFormContainer = styled.div`
   max-width: 100%;
   display: flex;
   flex-direction: column;
+  background: #f9f9f9;
+  padding: 20px 40px;
+  border-radius: 20px;
 `;
 
 export const InputContainer = styled.div`
@@ -46,24 +49,4 @@ export const Option = styled.option`
   font-size: 12px;
   background: white;
   padding: 10px;
-`;
-
-export const Button = styled.button`
-  padding: 10px;
-  height: 50%;
-  border-radius: 20px;
-  border: none;
-  background-color: #a60202;
-  color: white;
-  font-size: 16px;
-  font-weight: 500;
-  cursor: pointer;
-  &:active {
-    transform: translateY(1px);
-  }
-  &:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-    transform: none;
-  }
 `;

@@ -1,16 +1,18 @@
 import { styled } from "styled-components";
 import CheckListForm from "../components/CheckListForm";
+import ItemsList from "../components/ItemsList";
 
 export const CheckListContainer = styled.div`
-  padding: 20px 40px;
-  border-radius: 20px;
-  background: #f9f9f9;
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
 `;
 
 const Checklist = () => {
   return (
     <CheckListContainer>
       <CheckListForm />
+      <ItemsList />
     </CheckListContainer>
   );
 };

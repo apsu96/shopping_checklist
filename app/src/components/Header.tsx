@@ -7,6 +7,7 @@ const Header = () => {
   const [currentPage, setCurrentPage] = useState({
     checkList: true,
     shoppingList: false,
+    signin: false,
   });
   const location = useLocation();
 
@@ -15,11 +16,19 @@ const Header = () => {
       setCurrentPage({
         checkList: false,
         shoppingList: true,
+        signin: false,
+      });
+    } else if (location.pathname.includes("signin")) {
+      setCurrentPage({
+        checkList: false,
+        shoppingList: false,
+        signin: true,
       });
     } else {
       setCurrentPage({
         checkList: true,
         shoppingList: false,
+        signin: false,
       });
     }
   }, [location.pathname]);
@@ -33,6 +42,9 @@ const Header = () => {
         current={currentPage.shoppingList.toString()}
       >
         <Text>Shopping List</Text>
+      </LinkButton>
+      <LinkButton to="/signin" current={currentPage.signin.toString()}>
+        <Text>Sign in</Text>
       </LinkButton>
     </HeaderContainer>
   );

@@ -77,3 +77,7 @@ export const TextLink = styled(Link)`
   text-decoration: none;
   color: #a60202;
 `;
+
+export const ErrorText = styled(Text)`
+  color: #a60202;
+`;

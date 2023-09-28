@@ -2,7 +2,10 @@ import { styled } from "styled-components";
 import { Button, ErrorText, Title } from "../components/UIKit.styled";
 import { Input, InputLabel } from "../components/CheckListForm.styled";
 import { useEffect, useState } from "react";
-import { getCSRFToken, signIn } from "../api";
+import { signIn } from "../api";
+import { useNavigate, redirect } from "react-router-dom";
+import store from "../Store";
+import { observer } from "mobx-react-lite";
 
 export const SignInContainer = styled.div`
   display: flex;
@@ -13,24 +16,28 @@ export const SignInContainer = styled.div`
   background-color: #f9f9f9;
 `;
 
-const SignIn = () => {
+const SignIn = observer(() => {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const navigate = useNavigate();
 
   async function login() {
     setErrorMessage("");
     try {
       const res = await signIn(userName, password);
-      console.log(res);
+      store.setUser(userName);
+      redirect("/");
     } catch (err: any) {
       setErrorMessage(err.response.data);
     }
   }
 
   useEffect(() => {
-    getCSRFToken();
-  }, []);
+    if (store.user) {
+      navigate("/");
+    }
+  }, [store.user]);
 
   return (
     <SignInContainer>
@@ -51,6 +58,6 @@ const SignIn = () => {
       <ErrorText>{errorMessage}</ErrorText>
     </SignInContainer>
   );
-};
+});
 
 export default SignIn;

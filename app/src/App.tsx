@@ -4,6 +4,9 @@ import { Route, Routes } from "react-router-dom";
 import Checklist from "./pages/Checklist";
 import ShoppingList from "./pages/ShoppingList";
 import SignIn from "./pages/SignIn";
+import { useEffect } from "react";
+import { getUser } from "./api";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 const AppContainer = styled.div`
   min-height: 100vh;
@@ -13,12 +16,29 @@ const AppContainer = styled.div`
 `;
 
 function App() {
+  useEffect(() => {
+    getUser();
+  }, []);
   return (
     <AppContainer>
       <Header />
       <Routes>
-        <Route path="*" element={<Checklist />} />
-        <Route path="/shoppingList" element={<ShoppingList />} />
+        <Route
+          path="*"
+          element={
+            <ProtectedRoute>
+              <Checklist />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/shoppingList"
+          element={
+            <ProtectedRoute>
+              <ShoppingList />
+            </ProtectedRoute>
+          }
+        />
         <Route path="/signin" element={<SignIn />} />
       </Routes>
     </AppContainer>

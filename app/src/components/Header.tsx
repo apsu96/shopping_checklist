@@ -2,8 +2,10 @@ import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { HeaderContainer, LinkButton } from "./Header.styled";
 import { Text } from "./UIKit.styled";
+import { observer } from "mobx-react-lite";
+import store from "../Store";
 
-const Header = () => {
+const Header = observer(() => {
   const [currentPage, setCurrentPage] = useState({
     checkList: true,
     shoppingList: false,
@@ -43,11 +45,15 @@ const Header = () => {
       >
         <Text>Shopping List</Text>
       </LinkButton>
-      <LinkButton to="/signin" current={currentPage.signin.toString()}>
-        <Text>Sign in</Text>
-      </LinkButton>
+      {!store.user ? (
+        <LinkButton to="/signin" current={currentPage.signin.toString()}>
+          <Text>Sign in</Text>
+        </LinkButton>
+      ) : (
+        <Text>{store.user}</Text>
+      )}
     </HeaderContainer>
   );
-};
+});
 
 export default Header;

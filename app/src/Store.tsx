@@ -23,6 +23,7 @@ export interface ShoppingItem {
 }
 
 class Store {
+  user: string | null = null;
   checkList: ShoppingItem[] = [];
 
   constructor() {
@@ -84,6 +85,10 @@ class Store {
     if (savedData) {
       this.checkList = JSON.parse(savedData);
     }
+  }
+
+  setUser(username: string | null) {
+    this.user = username;
   }
 }
 

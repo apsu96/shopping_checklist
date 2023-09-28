@@ -1,12 +1,10 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.contrib.auth import authenticate, login
+from django.views.decorators.csrf import ensure_csrf_cookie
 import json
 
 def index(request):
     return HttpResponse('Hello')
-
-def get_csrf(request):
-    return HttpResponse('CSRF cookie set')
 
 def sign_in(request):
     body = json.loads(request.body)
@@ -18,3 +16,12 @@ def sign_in(request):
         return HttpResponse('Success')
     else: 
         return HttpResponse('Invalid login or password', status=401)
+
+@ensure_csrf_cookie  
+def get_user(request):  
+    if request.user.is_authenticated:
+        username = request.user.username
+        return JsonResponse({'username': username})
+    else:
+        return HttpResponse('Not logged in')
+

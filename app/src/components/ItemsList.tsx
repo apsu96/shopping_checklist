@@ -29,7 +29,7 @@ const ItemsList = observer(() => {
         {Object.values(Category).map((val) => (
           <div key={uuid()}>
             <ColorTitle>{val}</ColorTitle>
-            {store.checkList.map((item, index) => {
+            {store.shoppingItems.map((item, index) => {
               if (item.category === val) {
                 return <ItemLine key={uuid()} item={item} index={index} />;
               } else {

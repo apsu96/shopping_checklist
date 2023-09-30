@@ -11,6 +11,7 @@ import { Button, Title } from "./UIKit.styled";
 import { useState } from "react";
 import store, { Category, Period } from "../Store";
 import uuid from "react-uuid";
+import { addShoppingItem } from "../api";
 
 const CheckListForm = () => {
   const [shoppingItem, setShoppingItem] = useState<string>("");
@@ -23,23 +24,24 @@ const CheckListForm = () => {
     setCategory(Category.grocery);
   }
 
-  function submitItem() {
-    store.setShoppingList({
-      id: uuid(),
+  async function submitItem() {
+    const newItem = {
+      id: store.shoppingItems.length,
       description: shoppingItem,
       period,
       category,
       needToBuy: false,
-      boughtInChecklist: false,
-      lastBought: null,
-    });
+      boughtInShoppingList: false,
+      lastBought: new Date().toISOString().slice(0, 10),
+    };
+    store.setShoppingList(newItem);
     clearForm();
   }
   return (
     <CheckListFormContainer>
       <Title>
-        Create your shopping checklist: Add items you need and specify how often
-        you usually buy them.
+        Add shopping items in checklist and specify how often you usually buy
+        them.
       </Title>
       <InputContainer>
         <InputGroup>

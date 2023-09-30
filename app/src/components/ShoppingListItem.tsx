@@ -26,7 +26,7 @@ const ShoppingListItem = ({ item }: { item: ShoppingItem }) => {
   return (
     <Container>
       <TextCheckboxContainer>
-        {item.boughtInChecklist ? (
+        {item.boughtInShoppingList ? (
           <CheckCircleIcon
             onClick={() => store.setBoughtInCheckList(item.id, false)}
           />
@@ -34,7 +34,10 @@ const ShoppingListItem = ({ item }: { item: ShoppingItem }) => {
           <RadioButtonUncheckedIcon
             onClick={() => {
               store.setBoughtInCheckList(item.id, true);
-              store.setLastBought(item.id, new Date());
+              store.setLastBought(
+                item.id,
+                new Date().toISOString().slice(0, 10)
+              );
             }}
           />
         )}

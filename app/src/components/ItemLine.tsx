@@ -27,7 +27,7 @@ const ItemLine = ({ item, index }: { item: ShoppingItem; index: number }) => {
 
   function handleDescriptionChange(e: React.ChangeEvent<HTMLInputElement>) {
     setDescription(e.target.value);
-    if (e.target.value) store.setDescription(index, e.target.value);
+    if (e.target.value) store.setDescription(item.id, e.target.value);
   }
   return (
     <ItemLineContainer>

@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from .models import Checklist, ShoppingItem
 from .serializers import ChecklistSerializer, ShoppingItemSerializer
 from rest_framework.parsers import JSONParser
+from datetime import date
 
 def index(request):
     return HttpResponse('Hello')
@@ -84,26 +85,14 @@ def delete_item(request):
         return HttpResponse('Shopping item not found', status=404)
     
 @login_required
-def change_last_bought(request):
-    try:
-        data = JSONParser().parse(request)
-        shopping_item = ShoppingItem.objects.get(pk=data['shopping_item_id'], checklist=data['checklist_id'])
-        shopping_item.last_bought = data['last_bought']
-        shopping_item.save()
-
-        serializer = ShoppingItemSerializer(shopping_item)
-        return JsonResponse(serializer.data)
-    except ShoppingItem.DoesNotExist:
-        return HttpResponse('Shopping item not found', status=404)
-    
-@login_required
 def change_bought_in_shopping_list(request):
     try:
         data = JSONParser().parse(request)
         shopping_item = ShoppingItem.objects.get(pk=data['shopping_item_id'], checklist=data['checklist_id'])
         shopping_item.bought_in_shopping_list = data['bought_in_shopping_list']
+        if data['bought_in_shopping_list']:
+            shopping_item.last_bought = date.today()
         shopping_item.save()
-
         serializer = ShoppingItemSerializer(shopping_item)
         return JsonResponse(serializer.data)
     except ShoppingItem.DoesNotExist:

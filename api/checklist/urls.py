@@ -11,7 +11,6 @@ urlpatterns = [
     path('change_need_to_buy/', views.change_need_to_buy, name='change_need_to_buy'),
     path('change_item_description/', views.change_item_description, name='change_item_description'),
     path('delete_item/', views.delete_item, name='delete_item'),
-    path('change_last_bought/', views.change_last_bought, name='change_last_bought'),
     path('change_bought_in_shopping_list/', views.change_bought_in_shopping_list, name='change_bought_in_shopping_list'),
     path('clear_shopping_list/', views.clear_shopping_list, name='clear_shopping_list')
 ]

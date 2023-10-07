@@ -1,5 +1,5 @@
 import axios from "axios";
-import store, { DBPeriod, Period, ShoppingItem } from "./Store";
+import { DBPeriod, Period, ShoppingItem } from "./Store";
 
 const API_URL = process.env.REACT_APP_API_URL;
 const COOKIE_NAME = process.env.REACT_APP_CSRF_TOKEN_NAME;
@@ -12,27 +12,7 @@ axios.defaults.headers.common["Content-Type"] = "application/json";
 export async function getUser() {
   try {
     const res = await axios.get(API_URL + "get_user/");
-    if (res.data.username) {
-      store.setUser(res.data.username);
-    }
-    // const cookies = document.cookie.split(";");
-    // let result = "";
-    // cookies.map((c) => {
-    //   const cookie = c.trim();
-    //   if (cookie.substring(0, COOKIE_NAME?.length) === COOKIE_NAME) {
-    //     const res = cookie.substring(COOKIE_NAME.length + 1);
-    //     if (res[-1] === ";") {
-    //       result = decodeURIComponent(res.substring(0, res.length - 1));
-    //     } else {
-    //       result = decodeURIComponent(res);
-    //     }
-    //     return null;
-    //   } else {
-    //     return null;
-    //   }
-    // });
-    // axios.defaults.headers.common["X-CSRFToken"] = result;
-    // token = result;
+    return res?.data?.username;
   } catch (err) {
     console.log(err);
   }
@@ -57,13 +37,8 @@ export async function getChecklists() {
     const res = await axios.get(API_URL + "get_checklists/");
     if (res.data.length > 0) {
       const shoppingList = res.data[0];
-      store.setChecklist(
-        shoppingList.id,
-        shoppingList.name,
-        shoppingList.shopping_items
-      );
+      return shoppingList;
     }
-    return res.data;
   } catch (err) {
     console.log(err);
   }
@@ -135,33 +110,18 @@ export async function deleteItem(itemId: number, checklistId: number) {
   }
 }
 
-export async function changeItemLastBought(
-  itemId: number,
-  lastBought: string,
-  checklistId: number
-) {
-  try {
-    await axios.patch(API_URL + "change_last_bought/", {
-      shopping_item_id: itemId,
-      last_bought: lastBought,
-      checklist_id: checklistId,
-    });
-  } catch (err) {
-    console.log(err);
-  }
-}
-
 export async function changeBoughtInShoppingList(
   itemId: number,
   boughtInShoppingList: boolean,
   checklistId: number
 ) {
   try {
-    await axios.patch(API_URL + "change_bought_in_shopping_list/", {
+    const res = await axios.patch(API_URL + "change_bought_in_shopping_list/", {
       shopping_item_id: itemId,
       bought_in_shopping_list: boughtInShoppingList,
       checklist_id: checklistId,
     });
+    return res.data;
   } catch (err) {
     console.log(err);
   }

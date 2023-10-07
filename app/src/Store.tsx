@@ -3,10 +3,11 @@ import {
   addShoppingItem,
   changeBoughtInShoppingList,
   changeItemDescription,
-  changeItemLastBought,
   changeItemNeedToBuy,
   clearShoppingList,
   deleteItem,
+  getChecklists,
+  getUser,
 } from "./api";
 
 export const LOCAL_STORAGE_KEY = "shoppingApp";
@@ -55,7 +56,23 @@ class Store {
 
   constructor() {
     makeAutoObservable(this);
-    this.getData();
+  }
+
+  async getUser() {
+    const user = await getUser();
+    if (user) {
+      this.setUser(user);
+      return user;
+    } else {
+      return null;
+    }
+  }
+
+  async getChecklist() {
+    const checklist = await getChecklists();
+    if (checklist) {
+      this.setChecklist(checklist.id, checklist.name, checklist.shopping_items);
+    }
   }
 
   setChecklist(id: number, name: string, items: DBShoppingItem[]) {
@@ -86,25 +103,22 @@ class Store {
     if (this.checklistId) {
       await addShoppingItem(item, this.checklistId);
       this.shoppingItems.push(item);
-      this.updateLocalStorage();
     }
   }
 
-  async setDescription(index: number, newValue: string) {
+  async setDescription(id: number, newValue: string) {
     if (this.checklistId && newValue) {
-      await changeItemDescription(index, newValue, this.checklistId);
-      this.shoppingItems[index].description = newValue;
-      this.updateLocalStorage();
+      await changeItemDescription(id, newValue, this.checklistId);
     }
   }
 
   async setNeedToBuy(id: number, option: boolean) {
     if (this.checklistId) {
       await changeItemNeedToBuy(id, option, this.checklistId);
-      this.shoppingItems = this.shoppingItems.map((list) =>
+      const shoppingItems = this.shoppingItems.map((list) =>
         list.id === id ? { ...list, needToBuy: option } : list
       );
-      this.updateLocalStorage();
+      this.setShoppingItems(shoppingItems);
     }
   }
 
@@ -116,46 +130,38 @@ class Store {
         needToBuy: false,
         boughtInChecklist: false,
       }));
-      this.updateLocalStorage();
     }
   }
 
-  async setBoughtInCheckList(id: number, option: boolean) {
+  async changeBoughtInCheckList(id: number, option: boolean) {
     if (this.checklistId) {
-      await changeBoughtInShoppingList(id, option, this.checklistId);
-      this.shoppingItems = this.shoppingItems.map((list) =>
-        list.id === id ? { ...list, boughtInChecklist: option } : list
+      const res = await changeBoughtInShoppingList(
+        id,
+        option,
+        this.checklistId
       );
-      this.updateLocalStorage();
+      const shoppingItems = this.shoppingItems.map((list) =>
+        list.id === res.id
+          ? {
+              ...list,
+              boughtInShoppingList: res.bought_in_shopping_list,
+              lastBought: res.last_bought,
+            }
+          : list
+      );
+      this.setShoppingItems(shoppingItems);
     }
   }
 
-  async setLastBought(id: number, date: string) {
-    if (this.checklistId) {
-      await changeItemLastBought(id, date, this.checklistId);
-      this.shoppingItems = this.shoppingItems.map((list) =>
-        list.id === id ? { ...list, lastBought: date } : list
-      );
-      this.updateLocalStorage();
-    }
+  setShoppingItems(newShoppingItems: ShoppingItem[]) {
+    this.shoppingItems = newShoppingItems;
   }
 
   async deleteItem(id: number) {
     if (this.checklistId) {
       await deleteItem(id, this.checklistId);
-      this.shoppingItems = this.shoppingItems.filter((list) => list.id !== id);
-      this.updateLocalStorage();
-    }
-  }
-
-  updateLocalStorage() {
-    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(this.shoppingItems));
-  }
-
-  getData() {
-    const savedData = localStorage.getItem(LOCAL_STORAGE_KEY);
-    if (savedData) {
-      this.shoppingItems = JSON.parse(savedData);
+      const shoppingItems = this.shoppingItems.filter((list) => list.id !== id);
+      this.setShoppingItems(shoppingItems);
     }
   }
 

@@ -25,7 +25,7 @@ const SignIn = () => {
   async function login() {
     setErrorMessage("");
     try {
-      const res = await signIn(userName, password);
+      await signIn(userName, password);
       store.setUser(userName);
       redirect("/");
     } catch (err: any) {

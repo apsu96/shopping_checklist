@@ -11,7 +11,6 @@ import { Button, Title } from "./UIKit.styled";
 import { useState } from "react";
 import store, { Category, Period } from "../Store";
 import uuid from "react-uuid";
-import { addShoppingItem } from "../api";
 
 const CheckListForm = () => {
   const [shoppingItem, setShoppingItem] = useState<string>("");

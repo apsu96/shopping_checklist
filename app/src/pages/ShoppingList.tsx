@@ -7,20 +7,37 @@ import {
 import store, { Category } from "../Store";
 import uuid from "react-uuid";
 import { observer } from "mobx-react-lite";
-
 import { ButtonContainer, ShoppingListContainer } from "./ShoppingList.styled";
 import ShoppingListItem from "../components/ShoppingListItem";
 import { useEffect, useState } from "react";
 
-const ShoppingList = observer(() => {
-  const sortedData = {
-    [Category.grocery]: store.shoppingItems.filter(
+const ShoppingList = () => {
+  const [groceryItems, setGroceryItems] = useState(
+    store.shoppingItems.filter(
       (list) => list.category === Category.grocery && list.needToBuy
-    ),
-    [Category.household]: store.shoppingItems.filter(
+    )
+  );
+  const [houseHoldItems, setHouseholdItems] = useState(
+    store.shoppingItems.filter(
       (list) => list.category === Category.household && list.needToBuy
-    ),
-  };
+    )
+  );
+
+  useEffect(() => {
+    const grocery = store.shoppingItems.filter(
+      (list) => list.category === Category.grocery && list.needToBuy
+    );
+    setGroceryItems(grocery);
+    const household = store.shoppingItems.filter(
+      (list) => list.category === Category.household && list.needToBuy
+    );
+    setHouseholdItems(household);
+  }, [store.shoppingItems]);
+
+  useEffect(() => {
+    store.getChecklist();
+  }, []);
+
   return (
     <ShoppingListContainer>
       <Title>Shopping List</Title>
@@ -29,20 +46,28 @@ const ShoppingList = observer(() => {
           Clear all
         </TextButton>
       </ButtonContainer>
-      {Object.entries(sortedData).map(([key, value]) => (
-        <div key={uuid()}>
-          <ColorTitle>{key}</ColorTitle>
-          {value.length === 0 ? (
-            <HelpText>No Items</HelpText>
-          ) : (
-            value.map((item) => {
-              return <ShoppingListItem key={uuid()} item={item} />;
-            })
-          )}
-        </div>
-      ))}
+      <div>
+        <ColorTitle>{Category.grocery}</ColorTitle>
+        {groceryItems.length === 0 ? (
+          <HelpText>No Items</HelpText>
+        ) : (
+          groceryItems.map((item) => (
+            <ShoppingListItem key={item.id} item={item} />
+          ))
+        )}
+      </div>
+      <div>
+        <ColorTitle>{Category.household}</ColorTitle>
+        {houseHoldItems.length === 0 ? (
+          <HelpText>No Items</HelpText>
+        ) : (
+          houseHoldItems.map((item) => (
+            <ShoppingListItem key={uuid()} item={item} />
+          ))
+        )}
+      </div>
     </ShoppingListContainer>
   );
-});
+};
 
-export default ShoppingList;
+export default observer(ShoppingList);

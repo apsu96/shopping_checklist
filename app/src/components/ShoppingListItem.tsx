@@ -1,9 +1,9 @@
 import store, { ShoppingItem } from "../Store";
-import RadioButtonUncheckedIcon from "@mui/icons-material/RadioButtonUnchecked";
-import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import { IconButton, Text } from "./UIKit.styled";
 import styled from "styled-components";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { useState } from "react";
+import Checkbox from "@mui/material/Checkbox";
 
 export const Container = styled.div`
   width: 50%;
@@ -23,24 +23,22 @@ export const TextCheckboxContainer = styled.div`
 `;
 
 const ShoppingListItem = ({ item }: { item: ShoppingItem }) => {
+  const [checked, setChecked] = useState(item.boughtInShoppingList);
+
+  function handleCheckbox(e: React.ChangeEvent<HTMLInputElement>) {
+    setChecked(e.target.checked);
+    store.changeBoughtInCheckList(item.id, e.target.checked);
+  }
+
   return (
     <Container>
       <TextCheckboxContainer>
-        {item.boughtInShoppingList ? (
-          <CheckCircleIcon
-            onClick={() => store.setBoughtInCheckList(item.id, false)}
-          />
-        ) : (
-          <RadioButtonUncheckedIcon
-            onClick={() => {
-              store.setBoughtInCheckList(item.id, true);
-              store.setLastBought(
-                item.id,
-                new Date().toISOString().slice(0, 10)
-              );
-            }}
-          />
-        )}
+        <Checkbox
+          checked={checked}
+          onChange={handleCheckbox}
+          inputProps={{ "aria-label": "controlled" }}
+          color="default"
+        />
         <Text>{item.description}</Text>
       </TextCheckboxContainer>
       <IconButton onClick={() => store.setNeedToBuy(item.id, false)}>

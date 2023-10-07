@@ -1,19 +1,12 @@
-import React, { useEffect } from "react";
-import store from "../Store";
-import { useNavigate } from "react-router-dom";
-import { observer } from "mobx-react-lite";
+import { Navigate, Outlet } from "react-router-dom";
 
-const ProtectedRoute = observer(
-  ({ children }: { children: React.ReactElement }) => {
-    const navigate = useNavigate();
-    useEffect(() => {
-      if (!store.user) {
-        navigate("/signin");
-      }
-    }, [store.user]);
-
-    return children;
+const ProtectedRoute = ({ user }: { user: string | null | undefined }) => {
+  if (user === undefined) {
+    return <p>Loading</p>;
+  } else if (!user) {
+    return <Navigate to={"/signin"} />;
   }
-);
+  return <Outlet />;
+};
 
 export default ProtectedRoute;

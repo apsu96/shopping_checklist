@@ -16,7 +16,7 @@ export const SignInContainer = styled.div`
   background-color: #f9f9f9;
 `;
 
-const SignIn = observer(() => {
+const SignIn = () => {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -32,7 +32,6 @@ const SignIn = observer(() => {
       setErrorMessage(err.response.data);
     }
   }
-
   useEffect(() => {
     if (store.user) {
       navigate("/");
@@ -58,6 +57,6 @@ const SignIn = observer(() => {
       <ErrorText>{errorMessage}</ErrorText>
     </SignInContainer>
   );
-});
+};
 
-export default SignIn;
+export default observer(SignIn);

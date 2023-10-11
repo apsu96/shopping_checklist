@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { HeaderContainer, LinkButton } from "./Header.styled";
 import { Text } from "./UIKit.styled";
 import { observer } from "mobx-react-lite";
 import store from "../Store";
+import { TextButton } from "./UIKit.styled";
 
 const Header = observer(() => {
   const [currentPage, setCurrentPage] = useState({
@@ -12,6 +13,7 @@ const Header = observer(() => {
     signin: false,
   });
   const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (location.pathname.includes("shoppingList")) {
@@ -50,7 +52,17 @@ const Header = observer(() => {
           <Text>Sign in</Text>
         </LinkButton>
       ) : (
-        <Text>{store.user}</Text>
+        <>
+          <Text>{store.user}</Text>
+          <TextButton
+            onClick={() => {
+              store.logoutUser();
+              navigate("/signin");
+            }}
+          >
+            Log out
+          </TextButton>
+        </>
       )}
     </HeaderContainer>
   );

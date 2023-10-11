@@ -34,10 +34,6 @@ const ShoppingList = () => {
     setHouseholdItems(household);
   }, [store.shoppingItems]);
 
-  useEffect(() => {
-    store.getChecklist();
-  }, []);
-
   return (
     <ShoppingListContainer>
       <Title>Shopping List</Title>

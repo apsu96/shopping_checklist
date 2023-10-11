@@ -4,9 +4,10 @@ import { Route, Routes } from "react-router-dom";
 import Checklist from "./pages/Checklist";
 import ShoppingList from "./pages/ShoppingList";
 import SignIn from "./pages/SignIn";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import ProtectedRoute from "./components/ProtectedRoute";
 import store from "./Store";
+import { observer } from "mobx-react-lite";
 
 const AppContainer = styled.div`
   min-height: 100vh;
@@ -16,23 +17,15 @@ const AppContainer = styled.div`
 `;
 
 function App() {
-  const [user, setUser] = useState<string | null | undefined>(undefined);
-
   useEffect(() => {
-    store
-      .getUser()
-      .then((res) => {
-        setUser(res);
-        store.getChecklist();
-      })
-      .catch(() => setUser(null));
+    store.getUser();
   }, []);
 
   return (
     <AppContainer>
       <Header />
       <Routes>
-        <Route element={<ProtectedRoute user={user} />}>
+        <Route element={<ProtectedRoute user={store.user} />}>
           <Route path="*" element={<Checklist />} />
           <Route path="/shoppingList" element={<ShoppingList />} />
         </Route>
@@ -42,4 +35,4 @@ function App() {
   );
 }
 
-export default App;
+export default observer(App);

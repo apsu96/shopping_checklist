@@ -32,6 +32,15 @@ export function signIn(username: string, password: string) {
     });
 }
 
+export async function logout() {
+  try {
+    const res = await axios.post(API_URL + "logout_user/");
+    return res.data;
+  } catch (err) {
+    console.log(err);
+  }
+}
+
 export async function getChecklists() {
   try {
     const res = await axios.get(API_URL + "get_checklists/");

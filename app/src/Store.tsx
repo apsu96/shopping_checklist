@@ -8,6 +8,7 @@ import {
   deleteItem,
   getChecklists,
   getUser,
+  logout,
 } from "./api";
 
 export const LOCAL_STORAGE_KEY = "shoppingApp";
@@ -62,9 +63,18 @@ class Store {
     const user = await getUser();
     if (user) {
       this.setUser(user);
+      await this.getChecklist();
       return user;
     } else {
       return null;
+    }
+  }
+
+  async logoutUser() {
+    const res = await logout();
+    if (res) {
+      this.setUser(null);
+      this.setChecklist(undefined, "", []);
     }
   }
 
@@ -75,7 +85,7 @@ class Store {
     }
   }
 
-  setChecklist(id: number, name: string, items: DBShoppingItem[]) {
+  setChecklist(id: number | undefined, name: string, items: DBShoppingItem[]) {
     this.checklistId = id;
     this.checklistName = name;
     this.shoppingItems = items.map((item) => {

@@ -3,7 +3,7 @@ import { Button, ErrorText, Title } from "../components/UIKit.styled";
 import { Input, InputLabel } from "../components/CheckListForm.styled";
 import { useEffect, useState } from "react";
 import { signIn } from "../api";
-import { useNavigate, redirect } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import store from "../Store";
 import { observer } from "mobx-react-lite";
 
@@ -27,7 +27,7 @@ const SignIn = () => {
     try {
       await signIn(userName, password);
       store.setUser(userName);
-      redirect("/");
+      navigate("/");
     } catch (err: any) {
       setErrorMessage(err.response.data);
     }

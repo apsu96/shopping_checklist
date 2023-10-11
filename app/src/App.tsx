@@ -18,7 +18,7 @@ const AppContainer = styled.div`
 
 function App() {
   useEffect(() => {
-    store.getUser();
+    store.getUser().catch((err) => console.log(err));
   }, []);
 
   return (

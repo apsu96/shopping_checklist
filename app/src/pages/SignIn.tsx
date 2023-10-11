@@ -2,7 +2,6 @@ import { styled } from "styled-components";
 import { Button, ErrorText, Title } from "../components/UIKit.styled";
 import { Input, InputLabel } from "../components/CheckListForm.styled";
 import { useEffect, useState } from "react";
-import { signIn } from "../api";
 import { useNavigate } from "react-router-dom";
 import store from "../Store";
 import { observer } from "mobx-react-lite";
@@ -25,8 +24,7 @@ const SignIn = () => {
   async function login() {
     setErrorMessage("");
     try {
-      await signIn(userName, password);
-      store.setUser(userName);
+      await store.loginUser(userName, password);
       navigate("/");
     } catch (err: any) {
       setErrorMessage(err.response.data);
@@ -34,7 +32,7 @@ const SignIn = () => {
   }
   useEffect(() => {
     if (store.user) {
-      navigate("/");
+      navigate(-2);
     }
   }, [store.user]);
 

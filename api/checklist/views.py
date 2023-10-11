@@ -1,5 +1,5 @@
 from django.http import HttpResponse, JsonResponse
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.contrib.auth.decorators import login_required
 from .models import Checklist, ShoppingItem
@@ -107,4 +107,9 @@ def clear_shopping_list(request):
         return HttpResponse('Success')
     except ShoppingItem.DoesNotExist:
         return JsonResponse('Shopping item not found', status=404)
+
+@login_required
+def logout_user(request):
+    logout(request)
+    return HttpResponse('Success')
 

@@ -145,3 +145,14 @@ export async function clearShoppingList(checklistId: number) {
     console.log(err);
   }
 }
+
+export async function generateShareLink(checklistId: number) {
+  try {
+    const res = await axios.post(API_URL + "generate_checklist_access/", {
+      checklist_id: checklistId,
+    });
+    return res.data;
+  } catch (err) {
+    console.log(err);
+  }
+}

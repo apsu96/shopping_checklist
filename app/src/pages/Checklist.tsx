@@ -1,6 +1,7 @@
 import { styled } from "styled-components";
 import CheckListForm from "../components/CheckListForm";
 import ItemsList from "../components/ItemsList";
+import ShareChecklist from "../components/ShareChecklist";
 
 export const CheckListContainer = styled.div`
   display: flex;
@@ -13,6 +14,7 @@ const Checklist = () => {
     <CheckListContainer>
       <CheckListForm />
       <ItemsList />
+      <ShareChecklist />
     </CheckListContainer>
   );
 };

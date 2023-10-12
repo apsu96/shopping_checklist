@@ -2,8 +2,8 @@ from django.http import HttpResponse, JsonResponse
 from django.contrib.auth import authenticate, login, logout
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.contrib.auth.decorators import login_required
-from .models import Checklist, ShoppingItem
-from .serializers import ChecklistSerializer, ShoppingItemSerializer
+from .models import Checklist, ShoppingItem, SharedChecklist
+from .serializers import ChecklistSerializer, ShoppingItemSerializer, SharedChecklistSerializer
 from rest_framework.parsers import JSONParser
 from datetime import date
 
@@ -113,3 +113,13 @@ def logout_user(request):
     logout(request)
     return HttpResponse('Success')
 
+@login_required
+def generate_checklist_access(request):
+    try:
+        data = JSONParser().parse(request)
+        checklist = Checklist.objects.get(pk=data['checklist_id'], created_by=request.user)
+        shared_checklist, created = SharedChecklist.objects.get_or_create(checklist=checklist)
+        serializer = SharedChecklistSerializer(shared_checklist)
+        return JsonResponse({'link': f"shared/{serializer.data['token']}/"})
+    except Checklist.DoesNotExist:
+        return HttpResponse('Checklist not found', status=404)

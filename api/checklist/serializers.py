@@ -1,5 +1,5 @@
 from django.contrib.auth.models import User
-from .models import Checklist, ShoppingItem
+from .models import Checklist, ShoppingItem, SharedChecklist
 from  rest_framework import serializers
 
 class UserSerializer(serializers.ModelSerializer):
@@ -23,3 +23,8 @@ class ChecklistSerializer(serializers.ModelSerializer):
         shopping_items = ShoppingItem.objects.filter(checklist=checklist)
         serializer = ShoppingItemSerializer(shopping_items, many=True)
         return serializer.data
+    
+class SharedChecklistSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SharedChecklist
+        fields = ['checklist', 'token', 'created_at']

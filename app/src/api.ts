@@ -18,6 +18,20 @@ export async function getUser() {
   }
 }
 
+export function signUp(username: string, password: string) {
+  return axios
+    .post(API_URL + "signup/", {
+      username: username,
+      password: password,
+    })
+    .then((res) => {
+      return res;
+    })
+    .catch((err) => {
+      throw err;
+    });
+}
+
 export function signIn(username: string, password: string) {
   return axios
     .post(API_URL + "signin/", {

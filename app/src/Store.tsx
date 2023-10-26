@@ -10,6 +10,7 @@ import {
   getUser,
   logout,
   signIn,
+  signUp,
 } from "./api";
 
 export const LOCAL_STORAGE_KEY = "shoppingApp";
@@ -74,6 +75,16 @@ class Store {
   async loginUser(username: string, password: string) {
     try {
       await signIn(username, password);
+      store.setUser(username);
+      await this.getChecklist();
+    } catch (err) {
+      throw err;
+    }
+  }
+
+  async signupUser(username: string, password: string) {
+    try {
+      await signUp(username, password);
       store.setUser(username);
       await this.getChecklist();
     } catch (err) {

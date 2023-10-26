@@ -1,10 +1,9 @@
 import styled from "styled-components";
-import { Title, ColorTitle, TextLink, Button, Text } from "./UIKit.styled";
+import { Title, ColorTitle, TextLink } from "./UIKit.styled";
 import store, { Category } from "../Store";
 import uuid from "react-uuid";
 import { observer } from "mobx-react-lite";
 import ItemLine from "./ItemLine";
-import { TextButton } from "./UIKit.styled";
 
 export const ItemsListContainer = styled.div`
   padding: 20px 40px;

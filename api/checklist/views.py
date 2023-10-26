@@ -1,14 +1,40 @@
 from django.http import HttpResponse, JsonResponse
+from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.contrib.auth.decorators import login_required
 from .models import Checklist, ShoppingItem, SharedChecklist
-from .serializers import ChecklistSerializer, ShoppingItemSerializer, SharedChecklistSerializer
+from .serializers import ChecklistSerializer, ShoppingItemSerializer, SharedChecklistSerializer, UserSerializer
 from rest_framework.parsers import JSONParser
 from datetime import date
 
 def index(request):
     return HttpResponse('Hello')
+
+def sign_up(request):
+    data = JSONParser().parse(request)
+
+    if User.objects.filter(username=data.get('username')).exists():
+        return HttpResponse('A user with this username already exists.', status=400)
+    
+    serializer = UserSerializer(data=data)
+    if serializer.is_valid():
+        user = User.objects.create_user(username=serializer.validated_data['username'], password=serializer.validated_data['password'])
+        checklist_data = {
+            'name': 'My checklist',
+            'created_by': user.id,
+            'last_edited_author': user.id,
+        }
+        checklist_serializer = ChecklistSerializer(data=checklist_data)
+        if checklist_serializer.is_valid():
+            checklist_serializer.save()
+            login(request, user)
+            return HttpResponse('Success!')
+        else:
+            user.delete()
+            return JsonResponse(checklist_serializer.errors, status=400)
+    else:
+        return HttpResponse(serializer.errors, status=400)
 
 def sign_in(request):
     body = JSONParser().parse(request)

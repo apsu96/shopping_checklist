@@ -5,7 +5,8 @@ from  rest_framework import serializers
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['url', 'username', 'email', 'groups']
+        fields = ['username', 'password']
+        extra_kwargs = {'password': {'write_only': True}}
 
 class ShoppingItemSerializer(serializers.ModelSerializer):
     class Meta:
@@ -14,6 +15,7 @@ class ShoppingItemSerializer(serializers.ModelSerializer):
 
 class ChecklistSerializer(serializers.ModelSerializer):
     shopping_items = serializers.SerializerMethodField()
+    shared_with = serializers.PrimaryKeyRelatedField(queryset=User.objects.all(), many=True, required=False)
 
     class Meta:
         model = Checklist

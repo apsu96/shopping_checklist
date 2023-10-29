@@ -15,5 +15,6 @@ urlpatterns = [
     path('delete_item/', views.delete_item, name='delete_item'),
     path('change_bought_in_shopping_list/', views.change_bought_in_shopping_list, name='change_bought_in_shopping_list'),
     path('clear_shopping_list/', views.clear_shopping_list, name='clear_shopping_list'),
-    path('generate_checklist_access/', views.generate_checklist_access, name='generate_checklist_access')
+    path('generate_checklist_access/', views.generate_checklist_access, name='generate_checklist_access'),
+    path('get_shared_checklist/', views.get_shared_checklist, name='get_shared_checklist')
 ]

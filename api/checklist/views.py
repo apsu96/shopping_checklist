@@ -149,3 +149,15 @@ def generate_checklist_access(request):
         return JsonResponse({'link': f"shared/{serializer.data['token']}/"})
     except Checklist.DoesNotExist:
         return HttpResponse('Checklist not found', status=404)
+    
+@login_required
+def get_shared_checklist(request):
+    try:
+        data = JSONParser().parse(request)
+        shared_checklist = SharedChecklist.objects.get(token=data['checklist_token'])
+        serializer = ChecklistSerializer(shared_checklist.checklist)
+        return JsonResponse({'checklist': serializer.data})
+    except Checklist.DoesNotExist:
+        return HttpResponse('Checklist not found', status=404)
+
+    

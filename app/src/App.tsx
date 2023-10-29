@@ -8,6 +8,7 @@ import { useEffect } from "react";
 import ProtectedRoute from "./components/ProtectedRoute";
 import store from "./Store";
 import { observer } from "mobx-react-lite";
+import SharedChecklist from "./pages/SharedChecklist";
 
 const AppContainer = styled.div`
   min-height: 100vh;
@@ -29,6 +30,7 @@ function App() {
           <Route path="*" element={<Checklist />} />
           <Route path="/shoppingList" element={<ShoppingList />} />
         </Route>
+        <Route path="/shared/:checklistToken/" element={<SharedChecklist />} />
         <Route path="/signin" element={<SignIn />} />
       </Routes>
     </AppContainer>

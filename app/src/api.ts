@@ -170,3 +170,14 @@ export async function generateShareLink(checklistId: number) {
     console.log(err);
   }
 }
+
+export async function getSharedChecklist(checklistToken: string) {
+  try {
+    const res = await axios.post(API_URL + "get_shared_checklist/", {
+      checklist_token: checklistToken,
+    });
+    return res.data?.checklist;
+  } catch (err) {
+    console.log(err);
+  }
+}

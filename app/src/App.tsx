@@ -1,5 +1,4 @@
 import { styled } from "styled-components";
-import Header from "./components/Header";
 import { Route, Routes } from "react-router-dom";
 import Checklist from "./pages/Checklist";
 import ShoppingList from "./pages/ShoppingList";
@@ -9,8 +8,10 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import store from "./Store";
 import { observer } from "mobx-react-lite";
 import SharedChecklist from "./pages/SharedChecklist";
+import ProfileDrawer from "./components/ProfileDrawer";
 
 const AppContainer = styled.div`
+  display: flex;
   min-height: 100vh;
   max-width: 1440px;
   width: 100%;
@@ -24,13 +25,15 @@ function App() {
 
   return (
     <AppContainer>
-      <Header />
+      <ProfileDrawer />
       <Routes>
         <Route element={<ProtectedRoute user={store.user} />}>
-          <Route path="*" element={<Checklist />} />
-          <Route path="/shoppingList" element={<ShoppingList />} />
+          <Route path="/" element={<Checklist />} />
+          <Route
+            path="/shared/:checklistToken/"
+            element={<SharedChecklist />}
+          />
         </Route>
-        <Route path="/shared/:checklistToken/" element={<SharedChecklist />} />
         <Route path="/signin" element={<SignIn />} />
       </Routes>
     </AppContainer>

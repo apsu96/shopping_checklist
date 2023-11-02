@@ -3,6 +3,11 @@ import { styled } from "styled-components";
 
 export const Title = styled.p`
   font-size: 22px;
+  margin: 0;
+  color: black;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.72px;
 `;
 
 export const ColorTitle = styled(Title)`
@@ -10,13 +15,18 @@ export const ColorTitle = styled(Title)`
 `;
 
 export const Text = styled.p`
-  font-size: 14px;
-  line-height: 14px;
+  font-size: 20px;
+  font-weight: 500;
+  margin: 0;
+  color: black;
+  letter-spacing: 0.72px;
 `;
 
 export const HelpText = styled.span`
-  color: grey;
-  font-size: 12px;
+  color: #504d4d;
+  font-size: 18px;
+  letter-spacing: 0.54px;
+  text-transform: lowercase;
 `;
 
 export const Button = styled.button`

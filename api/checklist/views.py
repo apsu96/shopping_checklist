@@ -3,8 +3,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.contrib.auth.decorators import login_required
-from .models import Checklist, ShoppingItem, SharedChecklist
-from .serializers import ChecklistSerializer, ShoppingItemSerializer, SharedChecklistSerializer, UserSerializer
+from .models import Checklist, ShoppingItem, SharedChecklist, ShoppingList
+from .serializers import ChecklistSerializer, ShoppingItemSerializer, SharedChecklistSerializer, UserSerializer, ShoppingListSerializer
 from rest_framework.parsers import JSONParser
 from datetime import date
 
@@ -26,13 +26,19 @@ def sign_up(request):
             'last_edited_author': user.id,
         }
         checklist_serializer = ChecklistSerializer(data=checklist_data)
-        if checklist_serializer.is_valid():
+        shopping_list_data = {
+            'name': 'Shopping list 1',
+            'created_by': user.id,
+        }
+        shopping_list_serializer = ShoppingListSerializer(data=shopping_list_data)
+        if checklist_serializer.is_valid() & shopping_list_serializer.is_valid():
             checklist_serializer.save()
+            shopping_list_serializer.save()
             login(request, user)
             return HttpResponse('Success!')
         else:
             user.delete()
-            return JsonResponse(checklist_serializer.errors, status=400)
+            return JsonResponse(shopping_list_serializer.errors, status=400)
     else:
         return HttpResponse(serializer.errors, status=400)
 
@@ -62,6 +68,15 @@ def get_checklists(request):
         serializer = ChecklistSerializer(checklists, many=True)
         return JsonResponse(serializer.data, safe=False)
     except Checklist.DoesNotExist:
+        return HttpResponse('Nothing found', status=404)
+    
+@login_required
+def get_shopping_lists(request):
+    try:
+        shopping_lists = ShoppingList.objects.filter(created_by=request.user)
+        serializer = ShoppingListSerializer(shopping_lists, many=True)
+        return JsonResponse(serializer.data, safe=False)
+    except ShoppingList.DoesNotExist:
         return HttpResponse('Nothing found', status=404)
     
 @login_required

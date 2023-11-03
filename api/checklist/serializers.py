@@ -32,6 +32,14 @@ class SharedChecklistSerializer(serializers.ModelSerializer):
         fields = ['checklist', 'token', 'created_at']
 
 class ShoppingListSerializer(serializers.ModelSerializer):
+    shopping_items = serializers.SerializerMethodField()
+    shared_with = serializers.PrimaryKeyRelatedField(queryset=User.objects.all(), many=True, required=False)
+
     class Meta:
         model = ShoppingList
-        fields = ['id', 'name', 'created_by', 'shared_with', 'last_edited_date']
+        fields = ['id', 'name', 'shared_with', 'last_edited_date', 'shopping_items']
+
+    def get_shopping_items(self, shopping_list):
+        shopping_items = ShoppingItem.objects.filter(shopping_lists=shopping_list)
+        serializer = ShoppingItemSerializer(shopping_items, many=True)
+        return serializer.data

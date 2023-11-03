@@ -11,7 +11,14 @@ class Checklist(models.Model):
     shared_with = models.ManyToManyField(User, related_name='shared_checklists')
     last_edited_date = models.DateTimeField(auto_now=True)
     last_edited_author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='last_edited_checklists')
-    
+
+class ShoppingList(models.Model):
+    id = models.CharField(max_length=64, default=generate_random_token, primary_key=True)
+    name = models.TextField()
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='shopping_lists')
+    shared_with = models.ManyToManyField(User, related_name='shared_shopping_lists')
+    last_edited_date = models.DateTimeField(auto_now=True)
+
 class ShoppingItem(models.Model):
     description = models.TextField()
     period = models.IntegerField()
@@ -20,6 +27,7 @@ class ShoppingItem(models.Model):
     bought_in_shopping_list = models.BooleanField()
     last_bought = models.DateField()
     checklist = models.ForeignKey(Checklist, on_delete=models.CASCADE, related_name='shopping_items')
+    shopping_lists = models.ManyToManyField(ShoppingList, related_name='shopping_items')
 
 class SharedChecklist(models.Model):
     checklist = models.ForeignKey(Checklist, on_delete=models.CASCADE)

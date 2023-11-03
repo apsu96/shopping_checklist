@@ -1,5 +1,5 @@
 from django.contrib.auth.models import User
-from .models import Checklist, ShoppingItem, SharedChecklist
+from .models import Checklist, ShoppingItem, SharedChecklist, ShoppingList
 from  rest_framework import serializers
 
 class UserSerializer(serializers.ModelSerializer):
@@ -11,7 +11,7 @@ class UserSerializer(serializers.ModelSerializer):
 class ShoppingItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = ShoppingItem
-        fields = ['id', 'description', 'period', 'category', 'need_to_buy', 'bought_in_shopping_list', 'last_bought', 'checklist']
+        fields = ['id', 'description', 'period', 'category', 'need_to_buy', 'bought_in_shopping_list', 'last_bought', 'checklist', 'shopping_lists']
 
 class ChecklistSerializer(serializers.ModelSerializer):
     shopping_items = serializers.SerializerMethodField()
@@ -30,3 +30,8 @@ class SharedChecklistSerializer(serializers.ModelSerializer):
     class Meta:
         model = SharedChecklist
         fields = ['checklist', 'token', 'created_at']
+
+class ShoppingListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ShoppingList
+        fields = ['id', 'name', 'created_by', 'shared_with', 'last_edited_date']

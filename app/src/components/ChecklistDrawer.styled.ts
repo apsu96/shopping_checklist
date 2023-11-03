@@ -3,6 +3,7 @@ import { styled } from "styled-components";
 export const checklistDrawerWidth = "500px";
 
 export const ChecklistDrawerContainer = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;

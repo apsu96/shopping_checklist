@@ -82,7 +82,7 @@ export const IconButton = styled(SmallButton)`
   color: black;
   width: unset;
   &:hover {
-    color: #a60202;
+    color: rgba(198, 153, 37, 0.72);
   }
 `;
 

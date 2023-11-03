@@ -10,7 +10,15 @@ import { observer } from "mobx-react-lite";
 import store from "../Store";
 import logout from "../images/Logout.png";
 import { useNavigate } from "react-router-dom";
-const ProfileDrawer = () => {
+import React from "react";
+
+const ProfileDrawer = ({
+  isOpen,
+  setIsOpen,
+}: {
+  isOpen: boolean;
+  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}) => {
   const navigate = useNavigate();
 
   function logUserOut() {
@@ -18,7 +26,11 @@ const ProfileDrawer = () => {
     navigate("/signin");
   }
   return (
-    <Drawer variant="permanent" sx={{ width: profileDrawerWidth }}>
+    <Drawer
+      sx={{ width: profileDrawerWidth }}
+      open={isOpen}
+      onClose={() => setIsOpen(false)}
+    >
       <DrawerContainer>
         <UsernameContainer>
           <Text>{store.user || "Offline"}</Text>

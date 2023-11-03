@@ -6,8 +6,16 @@ import { ButtonContainer, ShoppingListContainer } from "./ShoppingList.styled";
 import ShoppingListItem from "../components/ShoppingListItem";
 import ClearAll from "../images/ClearAll.png";
 import Share from "../images/Share.png";
+import { useEffect } from "react";
+import { getShoppingLists } from "../api";
 
 const ShoppingList = () => {
+  useEffect(() => {
+    if (store.user) {
+      getShoppingLists().then((res) => console.log(res));
+    }
+  }, [store.user]);
+
   return (
     <ShoppingListContainer>
       <Title>Shopping List</Title>

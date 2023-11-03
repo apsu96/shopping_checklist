@@ -181,3 +181,12 @@ export async function getSharedChecklist(checklistToken: string) {
     console.log(err);
   }
 }
+
+export async function getShoppingLists() {
+  try {
+    const res = await axios.get(API_URL + "get_shopping_lists/");
+    return res.data;
+  } catch (err) {
+    console.log(err);
+  }
+}

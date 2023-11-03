@@ -11,13 +11,17 @@ import store from "../Store";
 import logout from "../images/Logout.png";
 import { useNavigate } from "react-router-dom";
 import React from "react";
+import { ShoppingList } from "../App";
+import uuid from "react-uuid";
 
 const ProfileDrawer = ({
   isOpen,
   setIsOpen,
+  shoppingLists,
 }: {
   isOpen: boolean;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  shoppingLists: ShoppingList[];
 }) => {
   const navigate = useNavigate();
 
@@ -35,6 +39,9 @@ const ProfileDrawer = ({
         <UsernameContainer>
           <Text>{store.user || "Offline"}</Text>
         </UsernameContainer>
+        {shoppingLists.map((list) => (
+          <Text key={uuid()}>{list.name}</Text>
+        ))}
         {store.user && (
           <LogoutButton onClick={logUserOut}>
             <Text>Logout</Text>

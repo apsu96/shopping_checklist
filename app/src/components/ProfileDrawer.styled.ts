@@ -5,6 +5,7 @@ export const profileDrawerWidth = "220px";
 export const DrawerContainer = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 60px;
   height: 100%;
   width: ${profileDrawerWidth};

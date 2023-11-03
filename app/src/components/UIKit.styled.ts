@@ -15,7 +15,7 @@ export const ColorTitle = styled(Title)`
 `;
 
 export const Text = styled.p`
-  font-size: 20px;
+  font-size: 16px;
   font-weight: 500;
   margin: 0;
   color: black;
@@ -80,6 +80,7 @@ export const IconButton = styled(SmallButton)`
   padding: 0;
   background-color: transparent;
   color: black;
+  width: unset;
   &:hover {
     color: #a60202;
   }

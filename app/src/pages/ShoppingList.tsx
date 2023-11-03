@@ -1,63 +1,42 @@
-import {
-  Title,
-  ColorTitle,
-  TextButton,
-  HelpText,
-} from "../components/UIKit.styled";
+import { Text, HelpText, SmallText, Title } from "../components/UIKit.styled";
 import store, { Category } from "../Store";
 import uuid from "react-uuid";
 import { observer } from "mobx-react-lite";
 import { ButtonContainer, ShoppingListContainer } from "./ShoppingList.styled";
 import ShoppingListItem from "../components/ShoppingListItem";
-import { useEffect, useState } from "react";
+import ClearAll from "../images/ClearAll.png";
+import Share from "../images/Share.png";
 
 const ShoppingList = () => {
-  const [groceryItems, setGroceryItems] = useState(
-    store.shoppingItems.filter(
-      (list) => list.category === Category.grocery && list.needToBuy
-    )
-  );
-  const [houseHoldItems, setHouseholdItems] = useState(
-    store.shoppingItems.filter(
-      (list) => list.category === Category.household && list.needToBuy
-    )
-  );
-
-  useEffect(() => {
-    const grocery = store.shoppingItems.filter(
-      (list) => list.category === Category.grocery && list.needToBuy
-    );
-    setGroceryItems(grocery);
-    const household = store.shoppingItems.filter(
-      (list) => list.category === Category.household && list.needToBuy
-    );
-    setHouseholdItems(household);
-  }, [store.shoppingItems]);
-
   return (
     <ShoppingListContainer>
       <Title>Shopping List</Title>
       <ButtonContainer>
-        <TextButton onClick={() => store.clearShoppingList()}>
-          Clear all
-        </TextButton>
+        <img src={Share} width={25} height={22} alt="share" />
+        <img
+          src={ClearAll}
+          width={19}
+          height={24}
+          alt="clear all"
+          onClick={() => store.clearShoppingList()}
+        />
       </ButtonContainer>
       <div>
-        <ColorTitle>{Category.grocery}</ColorTitle>
-        {groceryItems.length === 0 ? (
+        <SmallText>{Category.grocery}</SmallText>
+        {store.groceryItems.length === 0 ? (
           <HelpText>No Items</HelpText>
         ) : (
-          groceryItems.map((item) => (
+          store.groceryItems.map((item) => (
             <ShoppingListItem key={item.id} item={item} />
           ))
         )}
       </div>
       <div>
-        <ColorTitle>{Category.household}</ColorTitle>
-        {houseHoldItems.length === 0 ? (
+        <SmallText>{Category.household}</SmallText>
+        {store.householdItems.length === 0 ? (
           <HelpText>No Items</HelpText>
         ) : (
-          houseHoldItems.map((item) => (
+          store.householdItems.map((item) => (
             <ShoppingListItem key={uuid()} item={item} />
           ))
         )}

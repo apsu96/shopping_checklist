@@ -4,22 +4,25 @@ import styled from "styled-components";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useState } from "react";
 import Checkbox from "@mui/material/Checkbox";
+import RadioButtonUncheckedIcon from "@mui/icons-material/RadioButtonUnchecked";
+import RadioButtonCheckedIcon from "@mui/icons-material/RadioButtonChecked";
 
 export const Container = styled.div`
-  width: 50%;
   display: flex;
   align-items: center;
-  background-color: #f9f9f9;
-  padding: 5px 10px;
-  border-radius: 20px;
-  margin-bottom: 10px;
+  background-color: #e4e4e4;
+  box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.25);
+  padding: 0px 15px;
+  border-radius: 50px;
+  margin-bottom: 21px;
   justify-content: space-between;
+  box-sizing: border-box;
 `;
 
 export const TextCheckboxContainer = styled.div`
   display: flex;
   align-items: center;
-  gap: 15px;
+  gap: 5px;
 `;
 
 const ShoppingListItem = ({ item }: { item: ShoppingItem }) => {
@@ -38,6 +41,8 @@ const ShoppingListItem = ({ item }: { item: ShoppingItem }) => {
           onChange={handleCheckbox}
           inputProps={{ "aria-label": "controlled" }}
           color="default"
+          icon={<RadioButtonUncheckedIcon />}
+          checkedIcon={<RadioButtonCheckedIcon />}
         />
         <Text>{item.description}</Text>
       </TextCheckboxContainer>

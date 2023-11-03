@@ -24,20 +24,29 @@ export const Text = styled.p`
 
 export const HelpText = styled.span`
   color: #504d4d;
-  font-size: 18px;
+  font-size: 12px;
   letter-spacing: 0.54px;
   text-transform: lowercase;
 `;
 
+export const SmallText = styled.p`
+  color: black;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.48px;
+  text-transform: capitalize;
+`;
+
 export const Button = styled.button`
   padding: 16px 20px;
-  border-radius: 20px;
+  border-radius: 50px;
   border: none;
-  background-color: #a60202;
+  background-color: rgba(198, 153, 37, 0.72);
   color: white;
   font-size: 16px;
   font-weight: 500;
   cursor: pointer;
+  text-transform: uppercase;
   &:active {
     transform: translateY(1px);
   }
@@ -49,10 +58,13 @@ export const Button = styled.button`
 `;
 
 export const SmallButton = styled(Button)<{ variant?: string }>`
-  padding: 10px 20px;
-  font-size: 14px;
+  padding: 0;
+  font-size: 18px;
+  letter-spacing: 0.6px;
   opacity: ${({ variant }: { variant?: string }) =>
     variant === "opacity" ? "0.5" : "1"};
+  width: 89px;
+  height: 34px;
 `;
 
 export const TextButton = styled(Button)`
@@ -78,9 +90,12 @@ export const CustomInput = styled.input`
   outline: none;
   border: none;
   font-family: "Open Sans", sans-serif;
-  text-transform: uppercase;
   text-overflow: ellipsis;
-  width: 50%;
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: 0.72px;
+  text-transform: capitalize;
+  width: 140px;
 `;
 
 export const TextLink = styled(Link)`

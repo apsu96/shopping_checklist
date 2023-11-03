@@ -1,11 +1,13 @@
 import { styled } from "styled-components";
 
+export const profileDrawerWidth = "220px";
+
 export const DrawerContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 60px;
   height: 100%;
-  width: 220px;
+  width: ${profileDrawerWidth};
   background-color: #c69925b8;
   padding: 100px 15px;
   box-sizing: border-box;

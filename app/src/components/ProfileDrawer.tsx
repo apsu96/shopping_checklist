@@ -3,6 +3,7 @@ import {
   DrawerContainer,
   LogoutButton,
   UsernameContainer,
+  profileDrawerWidth,
 } from "./ProfileDrawer.styled";
 import { Text } from "./UIKit.styled";
 import { observer } from "mobx-react-lite";
@@ -17,7 +18,7 @@ const ProfileDrawer = () => {
     navigate("/signin");
   }
   return (
-    <Drawer variant="permanent" sx={{ width: "220px" }}>
+    <Drawer variant="permanent" sx={{ width: profileDrawerWidth }}>
       <DrawerContainer>
         <UsernameContainer>
           <Text>{store.user || "Offline"}</Text>

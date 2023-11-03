@@ -31,7 +31,7 @@ const ItemsList = observer(() => {
             <ColorTitle>{val}</ColorTitle>
             {store.shoppingItems.map((item, index) => {
               if (item.category === val) {
-                return <ItemLine key={uuid()} item={item} index={index} />;
+                return <ItemLine key={uuid()} item={item} />;
               } else {
                 return null;
               }

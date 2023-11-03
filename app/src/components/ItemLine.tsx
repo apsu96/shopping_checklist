@@ -1,18 +1,17 @@
 import styled from "styled-components";
-import { IconButton, HelpText, SmallButton, CustomInput } from "./UIKit.styled";
+import { HelpText, SmallButton, CustomInput } from "./UIKit.styled";
 import store, { ShoppingItem } from "../Store";
-import DeleteIcon from "@mui/icons-material/Delete";
 import { useState } from "react";
 import React from "react";
+import Menu from "../images/Menu.png";
 
 export const ItemLineContainer = styled.div`
   display: flex;
   align-items: center;
-  background-color: #f3ecec;
-  padding: 5px 10px;
-  border-radius: 20px;
-  margin-bottom: 10px;
-  gap: 5px;
+  background-color: #e4e4e4;
+  padding: 6px 15px;
+  border-radius: 50px;
+  box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.25);
 `;
 
 export const ButtonContainer = styled.div`
@@ -22,7 +21,7 @@ export const ButtonContainer = styled.div`
   gap: 20px;
 `;
 
-const ItemLine = ({ item, index }: { item: ShoppingItem; index: number }) => {
+const ItemLine = ({ item }: { item: ShoppingItem }) => {
   const [desciption, setDescription] = useState(item.description);
 
   function handleDescriptionChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -32,23 +31,22 @@ const ItemLine = ({ item, index }: { item: ShoppingItem; index: number }) => {
   return (
     <ItemLineContainer>
       <CustomInput value={desciption} onChange={handleDescriptionChange} />
-      <HelpText>({item.period})</HelpText>
+      <HelpText>{item.period}</HelpText>
       <ButtonContainer>
         {!item.needToBuy ? (
           <SmallButton onClick={() => store.setNeedToBuy(item.id, true)}>
-            Need to buy
+            Add
           </SmallButton>
         ) : (
           <SmallButton
             onClick={() => store.setNeedToBuy(item.id, false)}
             variant="opacity"
           >
-            In your list
+            Added
           </SmallButton>
         )}
-        <IconButton onClick={() => store.deleteItem(item.id)}>
-          <DeleteIcon />
-        </IconButton>
+
+        <img src={Menu} width={4} height={18} />
       </ButtonContainer>
     </ItemLineContainer>
   );

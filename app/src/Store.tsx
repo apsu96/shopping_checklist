@@ -200,6 +200,18 @@ class Store {
   setUser(username: string | null) {
     this.user = username;
   }
+
+  get groceryItems() {
+    return this.shoppingItems.filter(
+      (item) => item.category === Category.grocery
+    );
+  }
+
+  get householdItems() {
+    return this.shoppingItems.filter(
+      (item) => item.category === Category.household
+    );
+  }
 }
 
 const store = new Store();

@@ -1,18 +1,24 @@
 import { Drawer } from "@mui/material";
 import {
+  CloseIconContainer,
   DrawerContainer,
+  ItemLink,
+  ItemLinkContainer,
+  ItemsContainer,
   LogoutButton,
   UsernameContainer,
   profileDrawerWidth,
 } from "./ProfileDrawer.styled";
-import { Text } from "./UIKit.styled";
+import { IconButton, Text, Title } from "./UIKit.styled";
 import { observer } from "mobx-react-lite";
 import store from "../Store";
-import logout from "../images/Logout.png";
-import { useNavigate } from "react-router-dom";
-import React from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { ShoppingList } from "../App";
 import uuid from "react-uuid";
+import AddIcon from "@mui/icons-material/Add";
+import User from "../images/User.png";
+import CloseIcon from "@mui/icons-material/Close";
+import { createShoppingList } from "../api";
 
 const ProfileDrawer = ({
   isOpen,
@@ -24,11 +30,17 @@ const ProfileDrawer = ({
   shoppingLists: ShoppingList[];
 }) => {
   const navigate = useNavigate();
+  const location = useLocation();
 
   function logUserOut() {
     store.logoutUser();
     navigate("/signin");
   }
+
+  function closeDrawer() {
+    setIsOpen(false);
+  }
+
   return (
     <Drawer
       sx={{ width: profileDrawerWidth }}
@@ -36,16 +48,36 @@ const ProfileDrawer = ({
       onClose={() => setIsOpen(false)}
     >
       <DrawerContainer>
+        <CloseIconContainer onClick={closeDrawer}>
+          <CloseIcon />
+        </CloseIconContainer>
         <UsernameContainer>
-          <Text>{store.user || "Offline"}</Text>
+          <img src={User} alt="user" width={100} height={80} />
+          <Title>{store.user || "Offline"}</Title>
         </UsernameContainer>
-        {shoppingLists.map((list) => (
-          <Text key={uuid()}>{list.name}</Text>
-        ))}
+        <ItemsContainer>
+          {shoppingLists.map((list) => (
+            <ItemLinkContainer key={uuid()}>
+              <ItemLink
+                to={`/${list.id}`}
+                onClick={() => {
+                  setIsOpen(false);
+                }}
+                variant={
+                  location.pathname.includes(list.id) ? "active" : undefined
+                }
+              >
+                <Text>{list.name}</Text>
+              </ItemLink>
+            </ItemLinkContainer>
+          ))}
+        </ItemsContainer>
+        <IconButton onClick={() => createShoppingList()}>
+          <AddIcon />
+        </IconButton>
         {store.user && (
           <LogoutButton onClick={logUserOut}>
             <Text>Logout</Text>
-            <img src={logout} alt="logout" width={16} height={20} />
           </LogoutButton>
         )}
       </DrawerContainer>

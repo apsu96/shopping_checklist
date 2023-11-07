@@ -190,3 +190,12 @@ export async function getShoppingLists() {
     console.log(err);
   }
 }
+
+export async function createShoppingList() {
+  try {
+    const res = await axios.post(API_URL + "create_shopping_list/");
+    return res.data;
+  } catch (err) {
+    console.log(err);
+  }
+}

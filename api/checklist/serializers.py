@@ -37,7 +37,7 @@ class ShoppingListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ShoppingList
-        fields = ['id', 'name', 'shared_with', 'last_edited_date', 'shopping_items']
+        fields = ['id', 'name', 'created_by', 'shared_with', 'last_edited_date', 'shopping_items']
 
     def get_shopping_items(self, shopping_list):
         shopping_items = ShoppingItem.objects.filter(shopping_lists=shopping_list)

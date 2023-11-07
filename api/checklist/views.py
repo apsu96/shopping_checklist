@@ -80,6 +80,20 @@ def get_shopping_lists(request):
         return HttpResponse('Nothing found', status=404)
     
 @login_required
+def create_shopping_list(request):
+    list_count = ShoppingList.objects.filter(created_by=request.user.id).count()
+    shopping_list_data = {
+            'name': f'Shopping list {list_count + 1}',
+            'created_by': request.user.id,
+        }
+    shopping_list_serializer = ShoppingListSerializer(data=shopping_list_data)
+    if shopping_list_serializer.is_valid():
+        shopping_list_serializer.save()
+        return JsonResponse(shopping_list_serializer.data)
+    else:
+        return JsonResponse(shopping_list_serializer.errors, status=400)
+    
+@login_required
 def add_shopping_item(request):
     data = JSONParser().parse(request)
     serializer = ShoppingItemSerializer(data=data)

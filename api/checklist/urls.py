@@ -10,6 +10,7 @@ urlpatterns = [
     path('get_user/', views.get_user, name='get_user'),
     path('get_checklists/', views.get_checklists, name='get_checklists'),
     path('get_shopping_lists/', views.get_shopping_lists, name='get_shopping_lists'),
+    path('create_shopping_list/', views.create_shopping_list, name='create_shopping_list'),
     path('add_shopping_item/', views.add_shopping_item, name='add_shopping_item'),
     path('change_need_to_buy/', views.change_need_to_buy, name='change_need_to_buy'),
     path('change_item_description/', views.change_item_description, name='change_item_description'),

@@ -4,7 +4,7 @@ import ShoppingList from "./pages/ShoppingList";
 import SignIn from "./pages/SignIn";
 import { useEffect, useState } from "react";
 import ProtectedRoute from "./components/ProtectedRoute";
-import store from "./Store";
+import store from "./store/Store";
 import { observer } from "mobx-react-lite";
 import SharedChecklist from "./pages/SharedChecklist";
 import ProfileDrawer from "./components/ProfileDrawer";
@@ -20,7 +20,6 @@ const AppContainer = styled.div`
   min-height: 100vh;
   max-width: 1440px;
   width: 100%;
-  width: 100vw;
   margin: 0 auto;
 `;
 
@@ -49,12 +48,14 @@ function App() {
 
   return (
     <AppContainer>
-      <ProfileDrawer
-        isOpen={isProfileDrawerOpen}
-        setIsOpen={setIsProfileDrawerOpen}
-        shoppingLists={shoppingLists}
-      />
-      <ProfileSideBar setIsOpen={setIsProfileDrawerOpen} />
+      {store.user && (
+        <ProfileDrawer
+          isOpen={isProfileDrawerOpen}
+          setIsOpen={setIsProfileDrawerOpen}
+          shoppingLists={shoppingLists}
+        />
+      )}
+      {store.user && <ProfileSideBar setIsOpen={setIsProfileDrawerOpen} />}
       <Routes>
         <Route element={<ProtectedRoute user={store.user} />}>
           <Route
@@ -65,15 +66,19 @@ function App() {
         </Route>
         <Route path="/signin" element={<SignIn />} />
       </Routes>
-      <div style={{ marginTop: "80px" }}>
-        <IconButton onClick={() => setIsChecklistDrawerOpen(true)}>
-          <BookIcon />
-        </IconButton>
-      </div>
-      <ChecklistDrawer
-        isOpen={isChecklistDrawerOpen}
-        setIsOpen={setIsChecklistDrawerOpen}
-      />
+      {store.user && (
+        <div style={{ marginTop: "80px" }}>
+          <IconButton onClick={() => setIsChecklistDrawerOpen(true)}>
+            <BookIcon />
+          </IconButton>
+        </div>
+      )}
+      {store.user && (
+        <ChecklistDrawer
+          isOpen={isChecklistDrawerOpen}
+          setIsOpen={setIsChecklistDrawerOpen}
+        />
+      )}
     </AppContainer>
   );
 }

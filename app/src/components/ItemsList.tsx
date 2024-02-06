@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Title, ColorTitle, TextLink } from "./UIKit.styled";
-import store, { Category } from "../Store";
+import store, { Category } from "../store/Store";
 import uuid from "react-uuid";
 import { observer } from "mobx-react-lite";
 import ItemLine from "./ItemLine";

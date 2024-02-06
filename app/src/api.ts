@@ -1,5 +1,5 @@
 import axios from "axios";
-import { DBPeriod, Period, ShoppingItem } from "./Store";
+import { DBPeriod, Period, ShoppingItem } from "./store/Store";
 
 const API_URL = process.env.REACT_APP_API_URL;
 const COOKIE_NAME = process.env.REACT_APP_CSRF_TOKEN_NAME;
@@ -59,7 +59,7 @@ export async function getChecklists() {
   try {
     const res = await axios.get(API_URL + "get_checklists/");
     if (res.data.length > 0) {
-      const shoppingList = res.data[0];
+      const shoppingList = res.data;
       return shoppingList;
     }
   } catch (err) {

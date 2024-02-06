@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { HelpText, SmallButton, CustomInput } from "./UIKit.styled";
-import store, { ShoppingItem } from "../Store";
+import store, { ShoppingItem } from "../store/Store";
 import { useState } from "react";
 import React from "react";
 import Menu from "../images/Menu.png";
@@ -26,7 +26,7 @@ const ItemLine = ({ item }: { item: ShoppingItem }) => {
 
   function handleDescriptionChange(e: React.ChangeEvent<HTMLInputElement>) {
     setDescription(e.target.value);
-    if (e.target.value) store.setDescription(item.id, e.target.value);
+    // if (e.target.value) store.setDescription(item.id, e.target.value);
   }
   return (
     <ItemLineContainer>
@@ -34,12 +34,14 @@ const ItemLine = ({ item }: { item: ShoppingItem }) => {
       <HelpText>{item.period}</HelpText>
       <ButtonContainer>
         {!item.needToBuy ? (
-          <SmallButton onClick={() => store.setNeedToBuy(item.id, true)}>
+          <SmallButton
+          // onClick={() => store.setNeedToBuy(item.id, true)}
+          >
             Add
           </SmallButton>
         ) : (
           <SmallButton
-            onClick={() => store.setNeedToBuy(item.id, false)}
+            // onClick={() => store.setNeedToBuy(item.id, false)}
             variant="opacity"
           >
             Added

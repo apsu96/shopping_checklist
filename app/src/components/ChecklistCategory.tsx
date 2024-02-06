@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Category, ShoppingItem } from "../Store";
+import { Category, ShoppingItem } from "../store/Store";
 import { SmallText } from "./UIKit.styled";
 import ItemLine from "./ItemLine";
 import uuid from "react-uuid";

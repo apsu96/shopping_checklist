@@ -1,5 +1,5 @@
 import { Text, HelpText, SmallText, Title } from "../components/UIKit.styled";
-import store, { Category } from "../Store";
+import store, { Category } from "../store/Store";
 import uuid from "react-uuid";
 import { observer } from "mobx-react-lite";
 import { ButtonContainer, ShoppingListContainer } from "./ShoppingList.styled";
@@ -10,12 +10,6 @@ import { useEffect } from "react";
 import { getShoppingLists } from "../api";
 
 const ShoppingList = () => {
-  useEffect(() => {
-    if (store.user) {
-      getShoppingLists().then((res) => console.log(res));
-    }
-  }, [store.user]);
-
   return (
     <ShoppingListContainer>
       <Title>Shopping List</Title>

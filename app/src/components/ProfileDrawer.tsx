@@ -11,7 +11,7 @@ import {
 } from "./ProfileDrawer.styled";
 import { IconButton, Text, Title } from "./UIKit.styled";
 import { observer } from "mobx-react-lite";
-import store from "../Store";
+import store from "../store/Store";
 import { useLocation, useNavigate } from "react-router-dom";
 import { ShoppingList } from "../App";
 import uuid from "react-uuid";

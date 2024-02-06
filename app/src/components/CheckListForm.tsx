@@ -9,7 +9,7 @@ import {
 } from "./CheckListForm.styled";
 import { Button, Title } from "./UIKit.styled";
 import { useState } from "react";
-import store, { Category, Period } from "../Store";
+import store, { Category, Period } from "../store/Store";
 import uuid from "react-uuid";
 
 const CheckListForm = () => {
@@ -33,7 +33,7 @@ const CheckListForm = () => {
       boughtInShoppingList: false,
       lastBought: new Date().toISOString().slice(0, 10),
     };
-    store.setShoppingList(newItem);
+    // store.setShoppingList(newItem);
     clearForm();
   }
   return (

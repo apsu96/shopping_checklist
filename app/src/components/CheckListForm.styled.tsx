@@ -26,14 +26,20 @@ export const InputGroup = styled.div`
 
 export const InputLabel = styled.p`
   font-size: 14px;
-  color: #a60202;
+  line-height: 14px;
+  color: #6c886f;
 `;
 export const Input = styled.input`
+  /* background: rgba(198, 153, 37, 0.09); */
+  background: #f9f9f9;
+  box-sizing: border-box;
   outline: none;
   padding: 15px;
   border: none;
   border-radius: 20px;
   font-size: 16px;
+  width: 100%;
+  margin: 0;
 `;
 
 export const Select = styled.select`

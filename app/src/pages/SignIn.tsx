@@ -9,16 +9,18 @@ import {
 import { Input, InputLabel } from "../components/CheckListForm.styled";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import store from "../Store";
+import store from "../store/Store";
 import { observer } from "mobx-react-lite";
 
 export const SignInContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  margin: 0 auto;
   padding: 30px;
-  background-color: #f9f9f9;
+  max-width: 300px;
+  width: 100%;
+  gap: 10px;
 `;
 
 const SignIn = () => {
@@ -62,23 +64,23 @@ const SignIn = () => {
   return (
     <SignInContainer>
       {isRegistered ? (
-        <SignInContainer>
+        <>
           <Title>Please sign in to continue:</Title>
-          <div>
+          <div style={{ width: "100%" }}>
             <InputLabel>Login</InputLabel>
             <Input
               value={userName}
               onChange={(e) => setUserName(e.target.value)}
             />
           </div>
-          <div>
-            <InputLabel>Passowrd</InputLabel>
+          <div style={{ width: "100%" }}>
+            <InputLabel>Password</InputLabel>
             <Input
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
-          <div style={{ marginTop: "30px" }}>
+          <div style={{ margin: "30px auto 0" }}>
             <Button
               disabled={userName === "" || password === ""}
               onClick={login}
@@ -87,20 +89,22 @@ const SignIn = () => {
             </Button>
           </div>
           <ErrorText>{errorMessage}</ErrorText>
-          <Text>
-            Don't have an account?{" "}
-            <TextButton
-              onClick={() => {
-                clearForm();
-                setIsRegistered(false);
-              }}
-            >
-              Create
-            </TextButton>
-          </Text>
-        </SignInContainer>
+          <div style={{ margin: "0 auto" }}>
+            <Text>
+              Don't have an account?{" "}
+              <TextButton
+                onClick={() => {
+                  clearForm();
+                  setIsRegistered(false);
+                }}
+              >
+                Create
+              </TextButton>
+            </Text>
+          </div>
+        </>
       ) : (
-        <SignInContainer>
+        <>
           <Title>Please sign up to continue:</Title>
           <div>
             <InputLabel>Login</InputLabel>
@@ -110,13 +114,13 @@ const SignIn = () => {
             />
           </div>
           <div>
-            <InputLabel>Passowrd</InputLabel>
+            <InputLabel>Password</InputLabel>
             <Input
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
-          <div style={{ marginTop: "30px" }}>
+          <div style={{ margin: "30px auto 0" }}>
             <Button
               disabled={userName === "" || password === ""}
               onClick={signup}
@@ -125,8 +129,14 @@ const SignIn = () => {
             </Button>
           </div>
           <ErrorText>{errorMessage}</ErrorText>
-          <Text>
-            Already have an account?{" "}
+          <div
+            style={{
+              margin: "0 auto",
+              display: "flex",
+              gap: "5px",
+            }}
+          >
+            <Text>Already have an account? </Text>
             <TextButton
               onClick={() => {
                 clearForm();
@@ -135,8 +145,8 @@ const SignIn = () => {
             >
               Sign in
             </TextButton>
-          </Text>
-        </SignInContainer>
+          </div>
+        </>
       )}
     </SignInContainer>
   );

@@ -1,4 +1,4 @@
-import store, { ShoppingItem } from "../Store";
+import store, { ShoppingItem } from "../store/Store";
 import { IconButton, Text } from "./UIKit.styled";
 import styled from "styled-components";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -46,7 +46,9 @@ const ShoppingListItem = ({ item }: { item: ShoppingItem }) => {
         />
         <Text>{item.description}</Text>
       </TextCheckboxContainer>
-      <IconButton onClick={() => store.setNeedToBuy(item.id, false)}>
+      <IconButton
+      // onClick={() => store.setNeedToBuy(item.id, false)}
+      >
         <DeleteIcon />
       </IconButton>
     </Container>

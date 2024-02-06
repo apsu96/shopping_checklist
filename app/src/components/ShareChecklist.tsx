@@ -1,5 +1,5 @@
 import { useState } from "react";
-import store from "../Store";
+import store from "../store/Store";
 import { observer } from "mobx-react-lite";
 import { generateShareLink } from "../api";
 import { Button, Text, TextButton } from "./UIKit.styled";
@@ -10,12 +10,12 @@ const ShareChecklist = () => {
   const [isCopied, setIsCopied] = useState(false);
 
   async function generateLink() {
-    if (store.checklistId) {
-      const data = await generateShareLink(store.checklistId);
-      if (data && data.link) {
-        setLink(window.location.href + data.link);
-      }
-    }
+    // if (store.checklistId) {
+    //   const data = await generateShareLink(store.checklistId);
+    //   if (data && data.link) {
+    //     setLink(window.location.href + data.link);
+    //   }
+    // }
   }
 
   function copyLink() {

@@ -4,10 +4,8 @@ import { styled } from "styled-components";
 export const Title = styled.p`
   font-size: 22px;
   margin: 0;
-  color: black;
+  color: #4b5e4e;
   font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.72px;
 `;
 
 export const ColorTitle = styled(Title)`
@@ -18,14 +16,12 @@ export const Text = styled.p`
   font-size: 16px;
   font-weight: 500;
   margin: 0;
-  color: black;
-  letter-spacing: 0.72px;
+  color: #4b5e4e;
 `;
 
 export const HelpText = styled.span`
   color: #504d4d;
   font-size: 12px;
-  letter-spacing: 0.54px;
   text-transform: lowercase;
 `;
 
@@ -33,12 +29,11 @@ export const SmallText = styled.p`
   color: black;
   font-size: 14px;
   font-weight: 500;
-  letter-spacing: 0.48px;
   text-transform: capitalize;
 `;
 
 export const Button = styled.button`
-  padding: 16px 20px;
+  padding: 15px 50px;
   border-radius: 50px;
   border: none;
   background-color: rgba(198, 153, 37, 0.72);
@@ -46,12 +41,11 @@ export const Button = styled.button`
   font-size: 16px;
   font-weight: 500;
   cursor: pointer;
-  text-transform: uppercase;
   &:active {
     transform: translateY(1px);
   }
   &:disabled {
-    opacity: 0.5;
+    opacity: 0.6;
     cursor: not-allowed;
     transform: none;
   }
@@ -60,7 +54,6 @@ export const Button = styled.button`
 export const SmallButton = styled(Button)<{ variant?: string }>`
   padding: 0;
   font-size: 18px;
-  letter-spacing: 0.6px;
   opacity: ${({ variant }: { variant?: string }) =>
     variant === "opacity" ? "0.5" : "1"};
   width: 89px;
@@ -69,10 +62,14 @@ export const SmallButton = styled(Button)<{ variant?: string }>`
 
 export const TextButton = styled(Button)`
   padding: 0;
+  margin: 0;
+  font-size: 16px;
+  line-height: 16px;
   background-color: transparent;
-  color: #a60202;
+  color: #4b5e4e;
+  height: 22px;
   &:hover {
-    color: black;
+    color: #4b5e4e;
   }
 `;
 
@@ -94,7 +91,6 @@ export const CustomInput = styled.input`
   text-overflow: ellipsis;
   font-size: 16px;
   font-weight: 500;
-  letter-spacing: 0.72px;
   text-transform: capitalize;
   width: 140px;
 `;

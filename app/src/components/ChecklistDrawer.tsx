@@ -6,7 +6,7 @@ import {
 } from "./ChecklistDrawer.styled";
 import { IconButton, Title } from "./UIKit.styled";
 import { observer } from "mobx-react-lite";
-import store, { Category } from "../Store";
+import store, { Category } from "../store/Store";
 import ChecklistCategory from "./ChecklistCategory";
 import EastIcon from "@mui/icons-material/East";
 
